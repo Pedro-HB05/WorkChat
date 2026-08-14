@@ -114,6 +114,20 @@ public sealed class UsuariosController(
         return NoContent();
     }
 
+    [Authorize(Policy = AuthorizationPolicies.Equipe)]
+    [HttpPost("me/alterar-senha")]
+    public async Task<IActionResult> AlterarSenha(AlterarSenhaRequest request, CancellationToken ct)
+    {
+        var usuarioId = User.UsuarioId();
+        if (usuarioId is null) return Forbid();
+        var usuario = await db.Usuarios.FirstOrDefaultAsync(x => x.Id == usuarioId && x.EmpresaId == User.EmpresaId(), ct);
+        if (usuario is null) return NotFound();
+        if (!passwordHash.Verify(request.SenhaAtual, usuario.SenhaHash)) return BadRequest("A senha atual está incorreta.");
+        usuario.SenhaHash = passwordHash.Hash(request.NovaSenha);
+        await db.SaveChangesAsync(ct);
+        return NoContent();
+    }
+
     private static readonly System.Linq.Expressions.Expression<Func<Usuario, UsuarioResponse>> ResponseExpression = x =>
         new(x.Id, x.EmpresaId, x.Nome, x.Email, x.Perfil, x.Ativo, x.StatusAtendimento, x.LimiteChats, x.DataCriacao);
     private static UsuarioResponse CriarResponse(Usuario x) => new(x.Id, x.EmpresaId, x.Nome, x.Email, x.Perfil, x.Ativo, x.StatusAtendimento, x.LimiteChats, x.DataCriacao);

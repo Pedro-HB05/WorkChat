@@ -13,7 +13,7 @@ namespace WorkChat.Controllers;
 [Route("api/clientes")]
 public sealed class ClientesController(WorkChatDbContext db, TokenService tokenService) : ControllerBase
 {
-    [Authorize(Policy = AuthorizationPolicies.Equipe)]
+    [Authorize(Policy = AuthorizationPolicies.Administrador)]
     [HttpGet]
     public async Task<ActionResult<PaginaResponse<ClienteResponse>>> Listar([FromQuery] PaginacaoQuery paginacao, CancellationToken ct)
     {
@@ -24,7 +24,7 @@ public sealed class ClientesController(WorkChatDbContext db, TokenService tokenS
         return Ok(new PaginaResponse<ClienteResponse>(itens, paginacao.Pagina, paginacao.Tamanho, total));
     }
 
-    [Authorize(Policy = AuthorizationPolicies.Equipe)]
+    [Authorize(Policy = AuthorizationPolicies.Administrador)]
     [HttpGet("{id:guid}")]
     public async Task<ActionResult<ClienteResponse>> ObterPorId(Guid id, CancellationToken ct)
     {
@@ -47,7 +47,7 @@ public sealed class ClientesController(WorkChatDbContext db, TokenService tokenS
         return CreatedAtAction(nameof(ObterPorId), new { id = cliente.Id }, new CreateClienteResponse(dto, tokenService.CriarParaCliente(cliente)));
     }
 
-    [Authorize(Policy = AuthorizationPolicies.Equipe)]
+    [Authorize(Policy = AuthorizationPolicies.Administrador)]
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> Atualizar(Guid id, UpdateClienteRequest request, CancellationToken ct)
     {
@@ -61,7 +61,7 @@ public sealed class ClientesController(WorkChatDbContext db, TokenService tokenS
         return NoContent();
     }
 
-    [Authorize(Policy = AuthorizationPolicies.Equipe)]
+    [Authorize(Policy = AuthorizationPolicies.Administrador)]
     [HttpGet("{id:guid}/conversas")]
     public async Task<ActionResult<PaginaResponse<ConversaResponse>>> Historico(Guid id, [FromQuery] PaginacaoQuery paginacao, CancellationToken ct)
     {

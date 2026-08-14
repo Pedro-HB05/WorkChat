@@ -5,4 +5,5 @@ public sealed record UsuarioResponse(Guid Id, Guid EmpresaId, string Nome, strin
 public sealed record CreateUsuarioRequest(Guid EmpresaId, [Required, MaxLength(150)] string Nome, [Required, EmailAddress, MaxLength(150)] string Email, [Required, MinLength(8), MaxLength(100)] string Senha, [Required, MaxLength(20)] string Perfil, [Range(1, 100)] int LimiteChats = 5);
 public sealed record UpdateUsuarioRequest([Required, MaxLength(100)] string Nome, [Required, EmailAddress, MaxLength(255)] string Email, [Required, MaxLength(20)] string Perfil, bool Ativo, [Range(1, 100)] int LimiteChats = 5);
 public sealed record AtualizarStatusUsuarioRequest([Required, MaxLength(20)] string Status);
+public sealed record AlterarSenhaRequest([Required, MaxLength(100)] string SenhaAtual, [Required, MinLength(8), MaxLength(100)] string NovaSenha);
 public sealed record VincularUsuarioSetorRequest(Guid SetorId);
