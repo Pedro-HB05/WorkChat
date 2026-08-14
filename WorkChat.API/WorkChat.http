@@ -1,0 +1,15 @@
+@WorkChat_HostAddress = http://localhost:5019
+
+GET {{WorkChat_HostAddress}}/api/setores
+Accept: application/json
+
+###
+
+POST {{WorkChat_HostAddress}}/api/clientes
+Content-Type: application/json
+
+{
+  "email": "cliente@empresa.com"
+}
+
+###

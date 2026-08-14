@@ -1,0 +1,73 @@
+# =========================
+# Compilação .NET
+# =========================
+
+**/bin/
+**/obj/
+
+
+# =========================
+# Visual Studio
+# =========================
+
+.vs/
+**/.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+
+# =========================
+# Arquivos temporários e backups
+# =========================
+
+*.tmp
+*.bak
+*.backup
+*Backup*
+
+
+# =========================
+# Configurações locais com segredos
+# =========================
+
+**/appsettings.Development.json
+**/appsettings.Local.json
+**/appsettings.Production.json
+
+.env
+.env.*
+!.env.example
+
+
+# =========================
+# Logs
+# =========================
+
+*.log
+logs/
+
+
+# =========================
+# Sistema operacional
+# =========================
+
+.DS_Store
+Thumbs.db
+desktop.ini
+
+
+# =========================
+# Testes / cobertura
+# =========================
+
+TestResults/
+coverage/
+
+
+# =========================
+# IDEs
+# =========================
+
+.idea/
